@@ -59,7 +59,7 @@ const validatePassword = (request, response, next) => {
   return next();
 };
 
-// Middleware para validação de token
+// Middlewares para validação de token
 const validateToken = (request, response, next) => {
   const { authorization } = request.headers;
 
@@ -74,7 +74,7 @@ const validateToken = (request, response, next) => {
   return next();
 };
 
-// Middleware para validação de nome e idade
+// Middlewares para validação de nome e idade
 const validateNameAndAge = (request, response, next) => {
   const { name, age } = request.body;
 
@@ -96,7 +96,7 @@ const validateNameAndAge = (request, response, next) => {
   return next();
 };
 
-// Middleware para validação do campo talk.watchedAt
+// Middlewares para validação do campo talk.watchedAt
 const validateTalkWatchedAt = (request, response, next) => {
   const { talk } = request.body;
   const validateDateRegex = /^(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\d\d$/;
@@ -117,7 +117,7 @@ const validateTalkWatchedAt = (request, response, next) => {
     return next(); 
 };
 
-// Middleware para validação do campo talk.rate
+// Middlewares para validação do campo talk.rate
 const validateTalkRate = (request, response, next) => {
   const { talk: { rate } } = request.body;
   
@@ -125,7 +125,7 @@ const validateTalkRate = (request, response, next) => {
     return response.status(400).send({ message: 'O campo "rate" é obrigatório' });
   }
 
-  if (!Number.isInteger(rate) || rate < 0 || rate > 5) {
+  if (!Number.isInteger(rate) || rate < 1 || rate > 5) {
     return response.status(400)
       .send({ message: 'O campo "rate" deve ser um inteiro de 1 à 5' });
   }
@@ -178,7 +178,16 @@ app.post('/talker',
     await fs.write(updateTalkers);
 
     return response.status(201).send(newTalker);
-});
+  });
+
+app.put('/talker/:id',
+  validateToken,
+  validateNameAndAge,
+  validateTalkWatchedAt,
+  validateTalkRate,
+  async (request, response) => { 
+
+  });
 
 app.listen(PORT, () => {
   console.log('o pau tá on');
