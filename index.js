@@ -127,7 +127,7 @@ const validateTalkRate = (request, response, next) => {
 
   if (!Number.isInteger(rate) || rate < 0 || rate > 5) {
     return response.status(400)
-      .send({ message: 'O campo "rate" deve ter um inteiro entre 0 e 5' });
+      .send({ message: 'O campo "rate" deve ser um inteiro de 1 à 5' });
   }
 
   return next();
@@ -161,8 +161,23 @@ app.post('/talker',
   validateNameAndAge,
   validateTalkWatchedAt,
   validateTalkRate,
-  (request, response) => { 
-  response.status(200).send({ message: 'Pessoa palestrante cadastrada com sucesso' });
+  async (request, response) => { 
+    const { name, age, talk } = request.body;
+    
+    const oldTalkers = await fs.read();
+    
+    const newTalker = {
+      id: oldTalkers.length + 1,
+      name,
+      age,
+      talk,
+    };
+
+    const updateTalkers = [...oldTalkers, newTalker];
+
+    await fs.write(updateTalkers);
+
+    return response.status(201).send(newTalker);
 });
 
 app.listen(PORT, () => {
