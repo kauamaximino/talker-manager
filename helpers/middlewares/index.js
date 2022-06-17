@@ -1,3 +1,4 @@
+// Middleware para validação de email
 const validateEmail = (request, response, next) => {
   const { email } = request.body;
   const validEmail = /\S+@\S+\.\S+/.test(email);
@@ -30,7 +31,7 @@ const validatePassword = (request, response, next) => {
   return next();
 };
 
-// Middlewares para validação de nome e idade
+// Middleware para validação de nome e idade
 const validateNameAndAge = (request, response, next) => {
   const { name, age } = request.body;
 
@@ -52,7 +53,7 @@ const validateNameAndAge = (request, response, next) => {
   return next();
 };
 
-// Middlewares para validação do campo talk.watchedAt
+// Middleware para validação do campo talk.watchedAt
 const validateTalkWatchedAt = (request, response, next) => {
   const { talk } = request.body;
   const validateDateRegex = /^(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\d\d$/;
@@ -73,19 +74,18 @@ const validateTalkWatchedAt = (request, response, next) => {
     return next(); 
 };
 
-// Middlewares para validação do campo talk.rate
+// Middleware para validação do campo talk.rate
 const validateTalkRate = (request, response, next) => {
   const { talk: { rate } } = request.body;
   
   if (!rate) {
     return response.status(400).send({ message: 'O campo "rate" é obrigatório' });
   }
-
+  
   if (!Number.isInteger(rate) || rate < 1 || rate > 5) {
     return response.status(400)
       .send({ message: 'O campo "rate" deve ser um inteiro de 1 à 5' });
   }
-
   return next();
 };
 
