@@ -23,12 +23,12 @@ app.get('/', (_request, response) => {
 
 // Gerador de token aleatório
 const aleatoryToken = () => {
-    let tokenAleatory = '';
-    const caracteres = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    for (let index = 0; index < 16; index += 1) {
-        tokenAleatory += caracteres.charAt(Math.floor(Math.random() * caracteres.length));
-    }
-    return tokenAleatory;
+  let tokenAleatory = '';
+  const caracteres = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  for (let index = 0; index < 16; index += 1) {
+     tokenAleatory += caracteres.charAt(Math.floor(Math.random() * caracteres.length));
+  }
+  return tokenAleatory;
 };
 
 let tokenLogin = '';
@@ -119,6 +119,20 @@ app.put('/talker/:id',
     await fs.write(talkers);
 
     return response.status(200).send(talkerFromId);
+  });
+
+app.delete('/talker/:id',
+  validateToken,
+  async (request, response) => { 
+    const { id: talkerId } = request.params;
+
+    const talkers = await fs.read();
+
+    const deleteTalker = talkers.filter((talker) => talker.id !== Number(talkerId));
+
+    await fs.write(deleteTalker);
+
+    return response.status(204).send();
   });
 
 app.listen(PORT, () => {
