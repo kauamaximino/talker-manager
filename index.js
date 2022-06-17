@@ -53,11 +53,30 @@ app.get('/talker', async (_request, response) => {
     response.status(200).send(talker);
 });
 
+app.get('/talker/search', 
+  validateToken,
+  async (request, response) => { 
+    const { q: searchTerm } = request.query;
+    const talkers = await fs.read();
+      
+    if (!searchTerm) {
+      return response.status(200).send(talkers);
+    }
+  
+    const talkerByTerm = talkers
+      .filter((talker) => talker.name.toLowerCase().includes(searchTerm.toLowerCase()));
+  
+    if (talkerByTerm.length === 0) {
+      return response.status(200).send([]);
+    }
+  
+    return response.status(200).send(talkerByTerm);
+  });
+
 app.get('/talker/:id', async (request, response) => {
   const { id } = request.params;
   const talkers = await fs.read();
   const talkerId = talkers.find((talker) => talker.id === Number(id));
-
   if (talkerId) {
   return response.status(200).json(talkerId);
   }
