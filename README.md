@@ -1,7 +1,7 @@
 
 <h1 align="center">Talker Manager 🎤</h1>
 
-<h3 align="center">Neste projeto desenvolvi uma aplicação de cadastro de talçkers(palestrantes) em que será possível cadastrar, visualizar, pesquisar, editar e excluir informações.</h3>
+<h3 align="center">Neste projeto desenvolvi uma aplicação de cadastro de talkers (palestrantes) em que será possível cadastrar, visualizar, pesquisar, editar e excluir informações.</h3>
 <br/>
 
 ## 🗞️ Sobre o projeto
