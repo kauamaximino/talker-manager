@@ -17,7 +17,8 @@ Endpoints que irão ler e escrever em um arquivo utilizando o módulo fs.
 
 Antes de começar, você vai precisar ter instalado em sua máquina as seguintes ferramentas:
 [Git](https://git-scm.com), [Node.js](https://nodejs.org/en/). 
-Além disto é bom ter um editor para trabalhar com o código como [VSCode](https://code.visualstudio.com/)
+
+Além disto é bom ter um editor para trabalhar com o código como [VSCode](https://code.visualstudio.com/) e o [Insomnia](https://insomnia.rest/) ou algum [outro software](https://www.postman.com/) para testar as rotas desenvolvidas nessa API.
 <details>
 
 ```bash
